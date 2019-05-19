@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @author wangjf
  * @date 2019/5/11 0011.
  */
-public class ObservableCreate {
+public class ObservableCreate2_1 {
 
     public static void main(String[] args) {
         timerExercise();
