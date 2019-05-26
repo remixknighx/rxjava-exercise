@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class ObservableCreate2_1 {
 
     public static void main(String[] args) {
-        timerExercise();
+        intervalExercise();
     }
 
     /**
@@ -78,7 +78,7 @@ public class ObservableCreate2_1 {
      * interval所创建的对象会从0开始，每隔固定的事件发送一个数字
      */
     private static void intervalExercise(){
-        Observable.interval(3, TimeUnit.SECONDS).observeOn(Schedulers.io()).subscribe(new Subscriber<Long>() {
+        Observable.interval(3, TimeUnit.SECONDS).subscribe(new Subscriber<Long>() {
             @Override
             public void onCompleted() {
                 System.out.println("on complete");
