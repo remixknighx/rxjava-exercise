@@ -3,6 +3,7 @@ package com.bill.exercise.chapter2.chapter2_4;
 
 import rx.Observable;
 import rx.functions.FuncN;
+import rx.schedulers.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class CombineLatest {
     }
 
     private Observable<Long> createObserver(int index){
-        return Observable.interval(500 * index, TimeUnit.MILLISECONDS);
+        return Observable.interval(500 * index, TimeUnit.MILLISECONDS, Schedulers.trampoline());
     }
 
     private Observable<String> combineLatestObserver(){

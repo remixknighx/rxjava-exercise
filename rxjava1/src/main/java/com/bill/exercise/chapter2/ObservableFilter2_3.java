@@ -1,7 +1,7 @@
 package com.bill.exercise.chapter2;
 
 import rx.Observable;
-import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,13 +19,10 @@ public class ObservableFilter2_3 {
      * debounce操作符是用来做限流的
      */
     private static void debounceTest(){
-        Observable.interval(1000, TimeUnit.MILLISECONDS)
-                .debounce(new Func1<Long, Observable<Long>>() {
-                    @Override
-                    public Observable<Long> call(Long aLong) {
-                        return Observable.timer(aLong % 2 * 1500, TimeUnit.MILLISECONDS);
-                    }
-                });
+        Observable.interval(1000, TimeUnit.MILLISECONDS, Schedulers.trampoline())
+                .debounce(aLong -> {
+                            return Observable.timer(aLong % 2 * 1500, TimeUnit.MILLISECONDS);
+                        });
     }
 
     /**
@@ -87,11 +84,11 @@ public class ObservableFilter2_3 {
      * throttleFirst操作符取的则是规定时间段内的第一个数据，其他的会被过滤掉
      */
     private static void sampleAndThrottleFirstTest(){
-        Observable.interval(800, TimeUnit.MILLISECONDS).sample(1000, TimeUnit.MILLISECONDS).subscribe(i -> {
+        Observable.interval(800, TimeUnit.MILLISECONDS, Schedulers.trampoline()).sample(1000, TimeUnit.MILLISECONDS).subscribe(i -> {
             System.out.println("sample: " + i);
         });
 
-        Observable.interval(200, TimeUnit.MILLISECONDS).throttleFirst(1000, TimeUnit.MILLISECONDS).subscribe(i -> {
+        Observable.interval(200, TimeUnit.MILLISECONDS, Schedulers.trampoline()).throttleFirst(1000, TimeUnit.MILLISECONDS).subscribe(i -> {
             System.out.println("throttleFirst: " + i);
         });
     }

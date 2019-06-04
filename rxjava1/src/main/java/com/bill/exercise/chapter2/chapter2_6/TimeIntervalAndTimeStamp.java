@@ -1,6 +1,7 @@
 package com.bill.exercise.chapter2.chapter2_6;
 
 import rx.Observable;
+import rx.schedulers.Schedulers;
 import rx.schedulers.TimeInterval;
 import rx.schedulers.Timestamped;
 
@@ -29,11 +30,11 @@ public class TimeIntervalAndTimeStamp {
     }
 
     private static Observable<TimeInterval<Long>> timeIntervalObserver(){
-        return Observable.interval(1, TimeUnit.SECONDS).take(3).timeInterval();
+        return Observable.interval(1, TimeUnit.SECONDS, Schedulers.trampoline()).take(3).timeInterval();
     }
 
     private static Observable<Timestamped<Long>> timeStampObserver(){
-        return Observable.interval(1, TimeUnit.SECONDS).take(3).timestamp();
+        return Observable.interval(1, TimeUnit.SECONDS, Schedulers.trampoline()).take(3).timestamp();
     }
 
 }

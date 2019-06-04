@@ -3,6 +3,7 @@ package com.bill.exercise.chapter2.chapter2_4;
 import rx.Observable;
 import rx.functions.Func2;
 import rx.functions.Func3;
+import rx.schedulers.Schedulers;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,7 +19,7 @@ public class ZipAndZipWith {
     }
 
     private static Observable<String> createObserver(int index) {
-        return Observable.interval(100, TimeUnit.MILLISECONDS).take(index)
+        return Observable.interval(100, TimeUnit.MILLISECONDS, Schedulers.trampoline()).take(index)
                 .map(aLong -> {return index + ":" + aLong;});
     }
 

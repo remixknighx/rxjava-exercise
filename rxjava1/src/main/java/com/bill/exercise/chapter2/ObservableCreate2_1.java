@@ -1,7 +1,6 @@
 package com.bill.exercise.chapter2;
 
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.functions.Action1;
 import rx.functions.Func0;
@@ -78,7 +77,8 @@ public class ObservableCreate2_1 {
      * interval所创建的对象会从0开始，每隔固定的事件发送一个数字
      */
     private static void intervalExercise(){
-        Observable.interval(3, TimeUnit.SECONDS).subscribe(new Subscriber<Long>() {
+
+        Observable.interval(1000, TimeUnit.MILLISECONDS, Schedulers.trampoline()).take(3).subscribe(new Subscriber<Long>() {
             @Override
             public void onCompleted() {
                 System.out.println("on complete");
