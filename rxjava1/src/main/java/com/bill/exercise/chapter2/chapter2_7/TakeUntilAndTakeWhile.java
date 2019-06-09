@@ -1,6 +1,7 @@
 package com.bill.exercise.chapter2.chapter2_7;
 
 import rx.Observable;
+import rx.schedulers.Schedulers;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,11 +24,11 @@ public class TakeUntilAndTakeWhile {
     }
 
     private static Observable<Long> takeUntilObserver(){
-        return Observable.interval(1, TimeUnit.SECONDS).takeUntil(Observable.timer(3, TimeUnit.SECONDS));
+        return Observable.interval(1, TimeUnit.SECONDS, Schedulers.trampoline()).takeUntil(Observable.timer(3, TimeUnit.SECONDS));
     }
 
     private static Observable<Long> takeWhileObserver(){
-        return Observable.interval(1,TimeUnit.SECONDS).takeWhile(result -> {return result < 5;});
+        return Observable.interval(1,TimeUnit.SECONDS, Schedulers.trampoline()).takeWhile(result -> {return result < 5;});
     }
 
 }

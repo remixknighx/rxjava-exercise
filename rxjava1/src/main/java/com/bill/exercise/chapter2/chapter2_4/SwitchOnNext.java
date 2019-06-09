@@ -2,6 +2,7 @@ package com.bill.exercise.chapter2.chapter2_4;
 
 
 import rx.Observable;
+import rx.schedulers.Schedulers;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,12 +19,12 @@ public class SwitchOnNext {
     }
 
     private static Observable<String> createObserver(Long index){
-        return Observable.interval(1000, 1000, TimeUnit.MILLISECONDS).take(5)
+        return Observable.interval(1000, 1000, TimeUnit.MILLISECONDS, Schedulers.trampoline()).take(5)
                 .map(aLong -> {return index + "-" + aLong;});
     }
 
     private static Observable<String> switchObserver(){
-        return Observable.switchOnNext(Observable.interval(3000, TimeUnit.MILLISECONDS).take(3)
+        return Observable.switchOnNext(Observable.interval(3000, TimeUnit.MILLISECONDS, Schedulers.trampoline()).take(3)
         .map(aLong -> {return createObserver(aLong);}));
     }
 

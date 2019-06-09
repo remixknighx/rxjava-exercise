@@ -1,6 +1,7 @@
 package com.bill.exercise.chapter2.chapter2_7;
 
 import rx.Observable;
+import rx.schedulers.Schedulers;
 
 import java.util.concurrent.TimeUnit;
 
@@ -27,11 +28,11 @@ public class SkipUntilAndSkipWhile {
     }
 
     private static Observable<Long> skipUntilObserver(){
-        return Observable.interval(1, TimeUnit.SECONDS).skipUntil(Observable.timer(3, TimeUnit.SECONDS));
+        return Observable.interval(1, TimeUnit.SECONDS, Schedulers.trampoline()).skipUntil(Observable.timer(3, TimeUnit.SECONDS));
     }
 
     private static Observable<Long> skipWhileObserver(){
-        return Observable.interval(1, TimeUnit.SECONDS).skipWhile(aLong -> {return aLong < 5L;});
+        return Observable.interval(1, TimeUnit.SECONDS, Schedulers.trampoline()).skipWhile(aLong -> {return aLong < 5L;});
     }
 
 }
