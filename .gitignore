@@ -10,3 +10,4 @@ out
 gen
 /rxjava1/target/
 /rxjava2/target/
+/spring-boot-producer/target/
