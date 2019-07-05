@@ -11,3 +11,6 @@ gen
 /rxjava1/target/
 /rxjava2/target/
 /spring-boot-producer/target/
+/grpc-exercise/target/
+/spring-boot-consumer/target/
+/vertx-exercise/target/

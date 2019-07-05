@@ -1,1 +1,18 @@
+# 端口号
+server:
+  servlet:
+    context-path: /consumer
+  port: 8082
 
+# 模块名称
+module.name: spring-boot-consumer
+
+# kafka配置
+app.kafka.bootstrap.servers: localhost:9092,localhost:9093,localhost:9094
+kafka.topic: bill-topic-test
+spring.kafka.consumer:
+  group-id: bill-test
+#  auto-offset-reset: earliest
+
+# 日志级别
+logging.level: info
