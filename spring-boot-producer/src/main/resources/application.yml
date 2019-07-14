@@ -19,10 +19,16 @@ spring.datasource:
 
 # kafka配置
 app.kafka.bootstrap.servers: localhost:9092,localhost:9093,localhost:9094
-kafka.topic: bill-topic-test
+kafka.topic: first_topic
+spring:
+  kafka:
+    producer:
+      batch-size: 1000
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 # 日志级别
-logging.level: info
+#logging.level: info
 
 mybatis-plus:
   mapper-locations: classpath*:mapper/*Mapper.xml # mybatis-plus mapper xml 文件地址
