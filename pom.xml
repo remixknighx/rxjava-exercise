@@ -10,12 +10,12 @@
     <version>1.0-SNAPSHOT</version>
 
   <modules>
-    <module>rxjava1</module>
-    <module>rxjava2</module>
-    <module>vertx-exercise</module>
-    <module>spring-boot-producer</module>
-    <module>spring-boot-consumer</module>
-      <module>grpc-exercise</module>
+        <module>rxjava1</module>
+        <module>rxjava2</module>
+        <module>vertx-exercise</module>
+        <module>spring-boot-kafka</module>
+        <module>spring-boot-pulsar</module>
+        <module>grpc-exercise</module>
   </modules>
 
   <name>rxjava-exercise</name>
@@ -28,6 +28,7 @@
       <rxjava1.version>1.3.6</rxjava1.version>
       <rxjava2.version>2.2.8</rxjava2.version>
       <vertx.version>3.7.1</vertx.version>
+      <guava.version>23.0</guava.version>
   </properties>
 
   <parent>
@@ -39,6 +40,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
             <!-- vertx -->
             <dependency>
                 <groupId>io.vertx</groupId>

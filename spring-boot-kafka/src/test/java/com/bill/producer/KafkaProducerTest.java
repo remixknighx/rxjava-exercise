@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class KafkaProducerTest {
 
     @Autowired
-    KafkaProducer kafkaProducer;
+    SimpleKafkaProducer kafkaProducer;
 
     @Test
     public void testSendMessage() throws Exception {

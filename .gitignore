@@ -10,7 +10,7 @@ out
 gen
 /rxjava1/target/
 /rxjava2/target/
-/spring-boot-producer/target/
+/spring-boot-kafka/target/*
 /grpc-exercise/target/
-/spring-boot-consumer/target/
+/spring-boot-pulsar/target/
 /vertx-exercise/target/
