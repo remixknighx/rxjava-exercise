@@ -16,7 +16,7 @@ public class SimpleKafkaConsumer {
 
     private static Logger LOGGER = LoggerFactory.getLogger(SimpleKafkaConsumer.class);
 
-    @KafkaListener(topics = "first_topic")
+    @KafkaListener(topics = "${kafka.topic}")
     public void onMessage(ConsumerRecord<String, String> consumerRecord, Acknowledgment acknowledgment) {
         acknowledgment.acknowledge();
         LOGGER.info("Kafka Consumer consumes topic [{}], key [{}], offset [{}], partition [{}], data [{}]",
