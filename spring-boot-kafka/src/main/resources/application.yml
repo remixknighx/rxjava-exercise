@@ -19,7 +19,9 @@ spring.datasource:
 
 # kafka配置
 app.kafka.bootstrap.servers: localhost:9092,localhost:9093,localhost:9094
-kafka.topic: first_topic
+kafka:
+  topic1: first_topic
+  topic2: second_topic
 spring:
   kafka:
     producer:

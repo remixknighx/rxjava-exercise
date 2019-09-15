@@ -1,5 +1,7 @@
 package com.bill.controller;
 
+import com.bill.common.ResponseUtil;
+import com.bill.dto.Response;
 import com.bill.entity.StudentEntity;
 import com.bill.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +27,8 @@ public class StudentController {
     }
 
     @GetMapping("/send2Kafka")
-    public String send2Kafka(@RequestParam("data") String data) {
-        return studentService.send2Kafka(data);
+    public Response send2Kafka(@RequestParam("data") String data) {
+        return ResponseUtil.ok(studentService.send2Kafka(data));
     }
 
 }

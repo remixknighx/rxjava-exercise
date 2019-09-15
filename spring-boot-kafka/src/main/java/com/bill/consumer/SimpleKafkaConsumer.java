@@ -16,14 +16,16 @@ public class SimpleKafkaConsumer {
 
     private static Logger LOGGER = LoggerFactory.getLogger(SimpleKafkaConsumer.class);
 
-    @KafkaListener(topics = "${kafka.topic}")
+    @KafkaListener(topics = {"${kafka.topic1}", "${kafka.topic2}"})
     public void onMessage(ConsumerRecord<String, String> consumerRecord, Acknowledgment acknowledgment) {
-        acknowledgment.acknowledge();
-        LOGGER.info("Kafka Consumer consumes topic [{}], key [{}], offset [{}], partition [{}], data [{}]",
-                new Object[]{consumerRecord.topic(),
+        LOGGER.info("Thread [{}] consumes topic [{}], key [{}], offset [{}], partition [{}], data [{}]",
+                new Object[]{
+                        Thread.currentThread().getName(),
+                        consumerRecord.topic(),
                         consumerRecord.key(),
                         consumerRecord.offset(),
                         consumerRecord.partition(),
                         consumerRecord.value()});
+        acknowledgment.acknowledge();
     }
 }

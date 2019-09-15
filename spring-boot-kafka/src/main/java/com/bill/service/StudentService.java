@@ -12,6 +12,6 @@ public interface StudentService {
 
     List<StudentEntity> findAllStudent();
 
-    String send2Kafka(String data);
+    boolean send2Kafka(String data);
 
 }

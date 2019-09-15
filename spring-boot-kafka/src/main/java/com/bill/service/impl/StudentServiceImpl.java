@@ -29,8 +29,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public String send2Kafka(String data) {
-        producer.sendMessage(data);
-        return null;
+    public boolean send2Kafka(String data) {
+        return producer.sendMessage(data);
     }
 }
