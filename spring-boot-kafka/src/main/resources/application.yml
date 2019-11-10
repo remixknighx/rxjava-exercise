@@ -7,6 +7,11 @@ server:
 # 模块名称
 module.name: spring-boot-producer
 
+# zk配置
+zookeeper:
+  url: 127.0.0.1:2181
+  default_path: test
+
 # 数据库url
 spring.datasource:
   url: jdbc:mysql://127.0.0.1:3306/bill?serverTimezone=UTC&characterEncoding=utf8&useSSL=false

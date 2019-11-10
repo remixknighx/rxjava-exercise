@@ -2,7 +2,7 @@ package com.bill.service.impl;
 
 import com.bill.entity.StudentEntity;
 import com.bill.mapper.StudentMapper;
-import com.bill.producer.SimpleKafkaProducer;
+//import com.bill.producer.SimpleKafkaProducer;
 import com.bill.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,9 +19,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentMapper studentMapper;
-    @Autowired
-    @Qualifier("simpleProducer")
-    private SimpleKafkaProducer producer;
+//    @Autowired
+//    @Qualifier("simpleProducer")
+//    private SimpleKafkaProducer producer;
 
     @Override
     public List<StudentEntity> findAllStudent() {
@@ -30,6 +30,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public boolean send2Kafka(String data) {
-        return producer.sendMessage(data);
+//        return producer.sendMessage(data);
+        return false;
     }
 }

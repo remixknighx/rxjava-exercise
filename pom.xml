@@ -29,6 +29,7 @@
       <rxjava2.version>2.2.8</rxjava2.version>
       <vertx.version>3.7.1</vertx.version>
       <guava.version>23.0</guava.version>
+      <curator.version>4.0.0</curator.version>
   </properties>
 
   <parent>
@@ -40,6 +41,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
