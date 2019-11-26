@@ -3,8 +3,6 @@ package com.bill.vertx.core;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 
-
-
 public class VertxSample {
 
     public static void main(String[] args) {
