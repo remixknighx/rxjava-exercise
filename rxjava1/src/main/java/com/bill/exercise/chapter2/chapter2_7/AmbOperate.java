@@ -1,6 +1,7 @@
 package com.bill.exercise.chapter2.chapter2_7;
 
 import rx.Observable;
+import rx.schedulers.Schedulers;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,9 +21,9 @@ public class AmbOperate {
     }
 
     private static Observable<Integer> ambObserver(){
-        Observable<Integer> delay3 = Observable.just(1,2,3).delay(3000, TimeUnit.MILLISECONDS);
-        Observable<Integer> delay2 = Observable.just(4,5,6).delay(2000, TimeUnit.MILLISECONDS);
-        Observable<Integer> delay1 = Observable.just(7,8,9).delay(1000, TimeUnit.MILLISECONDS);
+        Observable<Integer> delay3 = Observable.just(1,2,3).delay(3000, TimeUnit.MILLISECONDS, Schedulers.trampoline());
+        Observable<Integer> delay2 = Observable.just(4,5,6).delay(2000, TimeUnit.MILLISECONDS, Schedulers.trampoline());
+        Observable<Integer> delay1 = Observable.just(7,8,9).delay(4000, TimeUnit.MILLISECONDS, Schedulers.trampoline());
         return Observable.amb(delay1, delay2, delay3);
     }
 

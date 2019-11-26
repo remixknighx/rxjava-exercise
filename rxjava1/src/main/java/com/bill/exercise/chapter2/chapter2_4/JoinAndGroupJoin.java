@@ -1,8 +1,6 @@
 package com.bill.exercise.chapter2.chapter2_4;
 
 import rx.Observable;
-import rx.functions.Func1;
-import rx.functions.Func2;
 
 import java.util.concurrent.TimeUnit;
 
@@ -25,7 +23,7 @@ public class JoinAndGroupJoin {
         });
 
         groupJoinObserver().subscribe(s -> {
-            System.out.println("groupjoin: " + s);
+            s.subscribe(str -> {System.out.println("groupjoin: " + str);});
         });
     }
 
@@ -37,42 +35,26 @@ public class JoinAndGroupJoin {
         return Observable.just(1L, 2L, 3L);
     }
 
-    private static Observable<String> joinObserver(){
-        return getLeftObservable().join(getRightObservable(), new Func1<String, Observable<Long>>() {
-                    @Override
-                    public Observable<Long> call(String s) {
-                        return Observable.timer(1000, TimeUnit.MILLISECONDS);
-                    }
-                }, new Func1<Long, Observable<Long>>() {
-                    @Override
-                    public Observable<Long> call(Long s) {
-                        return Observable.timer(1000, TimeUnit.MILLISECONDS);
-                    }
-                }, new Func2<String, Long, String>() {
-                    @Override
-                    public String call(String left, Long right) {
-                        return left + ":" + right;
-                    }
+    private static Observable<String> joinObserver() {
+        return getLeftObservable().join(getRightObservable(), (str) -> {
+            return Observable.timer(1000, TimeUnit.MILLISECONDS);
+        }, (aLong) -> {
+            return Observable.timer(1000, TimeUnit.MILLISECONDS);
+        }, (String left, Long right) -> {
+            return left + ":" + right;
         });
     }
 
-    private static Observable<Observable<String>> groupJoinObserver(){
+    private static Observable<Observable<String>> groupJoinObserver() {
         return getLeftObservable().groupJoin(getRightObservable(),
-                new Func1<String, Observable<Long>>() {
-                    @Override
-                    public Observable<Long> call(String s) {
-                        return Observable.timer(1000, TimeUnit.MILLISECONDS);
-                    }
-                }, new Func1<Long, Observable<Long>>() {
-                    @Override
-                    public Observable<Long> call(Long s) {
-                        return Observable.timer(1000, TimeUnit.MILLISECONDS);
-                    }
-                }, new Func2<String, Observable<Long>, Observable<String>>() {
-                    @Override
-                    public Observable<String> call(String left, Observable<Long> longObservable) {
-                        return longObservable.map(right -> {return left + ":" + right;});
-                    }
+                (str) -> {
+                    return Observable.timer(1000, TimeUnit.MILLISECONDS);
+                }, (aLong) -> {
+                    return Observable.timer(1000, TimeUnit.MILLISECONDS);
+                }, (String left, Observable<Long> longObservable) -> {
+                    return longObservable.map(right -> {
+                        return left + ":" + right;
+                    });
                 });
     }
 

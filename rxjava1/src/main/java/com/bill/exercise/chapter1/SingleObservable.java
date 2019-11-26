@@ -21,16 +21,13 @@ public class SingleObservable {
 
     private static void emitValue(){
         final int value = 5;
-        Single.create(new Single.OnSubscribe<Integer>() {
-            @Override
-            public void call(SingleSubscriber<? super Integer> singleSubscriber) {
-                if (!singleSubscriber.isUnsubscribed()) {
+        Single.create((SingleSubscriber<? super Integer> singleSubscriber) -> {
+            if (!singleSubscriber.isUnsubscribed()) {
 //                    发送数据
-//                    singleSubscriber.onSuccess(value);
+                singleSubscriber.onSuccess(value);
 
 //                    发送事件
-                    singleSubscriber.onError(new Exception("发送事件"));
-                }
+                singleSubscriber.onError(new Exception("发送事件"));
             }
         }).subscribe(new SingleSubscriber<Integer>() {
             @Override

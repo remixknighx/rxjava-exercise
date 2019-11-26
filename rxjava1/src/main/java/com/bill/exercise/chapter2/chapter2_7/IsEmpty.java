@@ -1,7 +1,6 @@
 package com.bill.exercise.chapter2.chapter2_7;
 
 import rx.Observable;
-import rx.Subscriber;
 
 /**
  * 判断源Observable是否发送过数据，如果发送过就会返回false
@@ -13,12 +12,7 @@ import rx.Subscriber;
 public class IsEmpty {
 
     public static void main(String[] args) {
-        Observable.create(new Observable.OnSubscribe<Integer>() {
-            @Override
-            public void call(Subscriber<? super Integer> subscriber) {
-                subscriber.onCompleted();
-            }
-        }).isEmpty().subscribe(result -> {
+        Observable.just(null).isEmpty().subscribe(result -> {
             System.out.println("isEmpty: " + result);
         });
     }

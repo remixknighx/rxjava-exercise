@@ -21,13 +21,11 @@ public class Reduce {
             list.add(i);
         }
 
-        Observable.from(list).reduce(new Func2<Integer, Integer, Integer>() {
-            @Override
-            public Integer call(Integer x, Integer y) {
-                return x * y;
-            }
+        Observable.from(list).reduce((Integer x, Integer y) -> {
+            System.out.println("x: " + x + " y: " + y);
+            return x * y;
         }).subscribe(finalResult -> {
-            System.out.println("finalResult" + finalResult);
+            System.out.println("finalResult: " + finalResult);
         });
 
     }

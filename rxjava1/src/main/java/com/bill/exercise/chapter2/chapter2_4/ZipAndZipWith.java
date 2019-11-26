@@ -1,8 +1,6 @@
 package com.bill.exercise.chapter2.chapter2_4;
 
 import rx.Observable;
-import rx.functions.Func2;
-import rx.functions.Func3;
 import rx.schedulers.Schedulers;
 
 import java.util.concurrent.TimeUnit;
@@ -24,20 +22,14 @@ public class ZipAndZipWith {
     }
 
     private static Observable<String> zipWithObserver(){
-        return createObserver(2).zipWith(createObserver(3), new Func2<String, String, String>() {
-            @Override
-            public String call(String s, String s2) {
-                return s + "-" + s2;
-            }
+        return createObserver(2).zipWith(createObserver(3), (String s, String s2) -> {
+            return s + "-" + s2;
         });
     }
 
     private static Observable<String> zipWithIterableObserver(){
-        return Observable.zip(createObserver(2), createObserver(3), createObserver(4), new Func3<String, String, String, String>() {
-            @Override
-            public String call(String s, String s2, String s3) {
-                return s + "-" + s2 + "-" + s3;
-            }
+        return Observable.zip(createObserver(2), createObserver(3), createObserver(4), (String s, String s2, String s3) -> {
+            return s + "-" + s2 + "-" + s3;
         });
     }
 

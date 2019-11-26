@@ -34,24 +34,21 @@ public class App {
      * 使用Observable.unsafeCreate方法创建Observable对象
      */
     private static Observable<Integer> createObservable(){
-        return Observable.unsafeCreate(new Observable.OnSubscribe<Integer>() {
-            @Override
-            public void call(Subscriber<? super Integer> subscriber) {
-                if (!subscriber.isUnsubscribed()) {
-                    for (int i = 0; i < 5; i ++) {
-                        int temp = new Random().nextInt(10);
+        return Observable.unsafeCreate((Subscriber<? super Integer> subscriber) -> {
+            if (!subscriber.isUnsubscribed()) {
+                for (int i = 0; i < 5; i++) {
+                    int temp = new Random().nextInt(10);
 
-                        if (temp > 8) {
-                            subscriber.onError(new Exception("value > 8"));
-                            break;
-                        } else {
-                            subscriber.onNext(temp);
-                        }
+                    if (temp > 8) {
+                        subscriber.onError(new Exception("value > 8"));
+                        break;
+                    } else {
+                        subscriber.onNext(temp);
+                    }
 
-                        // 无异常发生，正常结束
-                        if (i == 0) {
-                            subscriber.onCompleted();
-                        }
+                    // 无异常发生，正常结束
+                    if (i == 0) {
+                        subscriber.onCompleted();
                     }
                 }
             }

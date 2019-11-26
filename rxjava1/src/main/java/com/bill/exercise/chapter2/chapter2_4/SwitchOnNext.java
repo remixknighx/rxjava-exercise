@@ -1,6 +1,5 @@
 package com.bill.exercise.chapter2.chapter2_4;
 
-
 import rx.Observable;
 import rx.schedulers.Schedulers;
 

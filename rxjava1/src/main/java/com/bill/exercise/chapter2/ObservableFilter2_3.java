@@ -12,17 +12,19 @@ import java.util.concurrent.TimeUnit;
 public class ObservableFilter2_3 {
 
     public static void main(String[] args) {
-        sampleAndThrottleFirstTest();
+        debounceTest();
     }
 
     /**
      * debounce操作符是用来做限流的
      */
-    private static void debounceTest(){
+    private static void debounceTest() {
         Observable.interval(1000, TimeUnit.MILLISECONDS, Schedulers.trampoline())
                 .debounce(aLong -> {
-                            return Observable.timer(aLong % 2 * 1500, TimeUnit.MILLISECONDS);
-                        });
+                    return Observable.timer(aLong % 2 * 1500, TimeUnit.MILLISECONDS);
+                }).subscribe((aLong) -> {
+            System.out.println(aLong);
+        });
     }
 
     /**

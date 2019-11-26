@@ -42,24 +42,18 @@ public class MergeAndMergeDelayError {
     }
 
     private static Observable<Integer> mergeDelayErrorObserver(){
-        return Observable.mergeDelayError(Observable.create(new Observable.OnSubscribe<Integer>() {
-            @Override
-            public void call(Subscriber<? super Integer> subscriber) {
-                for (int i = 0; i < 5; i++) {
-                    if (i == 3){
-                        subscriber.onError(new Exception("error i == 3"));
-                    }
-                    subscriber.onNext(i);
+        return Observable.mergeDelayError(Observable.create((Subscriber<? super Integer> subscriber) -> {
+            for (int i = 0; i < 5; i++) {
+                if (i == 3) {
+                    subscriber.onError(new Exception("error i == 3"));
                 }
+                subscriber.onNext(i);
             }
-        }), Observable.create(new Observable.OnSubscribe<Integer>() {
-            @Override
-            public void call(Subscriber<? super Integer> subscriber) {
-                for (int i = 0; i < 5; i++) {
-                    subscriber.onNext(5 + i);
-                }
-                subscriber.onCompleted();
+        }), Observable.create((Subscriber<? super Integer> subscriber) -> {
+            for (int i = 0; i < 5; i++) {
+                subscriber.onNext(5 + i);
             }
+            subscriber.onCompleted();
         }));
     }
 

@@ -13,11 +13,8 @@ import rx.Subscriber;
 public class DefaultIfEmpty {
 
     public static void main(String[] args) {
-        Observable.create(new Observable.OnSubscribe<Integer>() {
-            @Override
-            public void call(Subscriber<? super Integer> subscriber) {
-                subscriber.onCompleted();
-            }
+        Observable.create((Subscriber<? super Integer> subscriber) -> {
+            subscriber.onCompleted();
         }).defaultIfEmpty(19).subscribe(result -> {
             System.out.println("empty: " + result);
         });

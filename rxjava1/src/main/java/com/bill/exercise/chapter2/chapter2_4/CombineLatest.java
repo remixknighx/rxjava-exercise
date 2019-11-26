@@ -18,43 +18,40 @@ import java.util.concurrent.TimeUnit;
 public class CombineLatest {
 
     public static void main(String[] args) {
-        new CombineLatest().combineLatestObserver().subscribe(i -> {
+//        createObserver(1).subscribe(i -> {
+//            System.out.println("result:" + i);
+//        });
+
+        combineLatestObserver().subscribe(i -> {
             System.out.println("CombineLatest:" + i);
         });
 
-        new CombineLatest().combineListObserver().subscribe(i -> {
+        combineListObserver().subscribe(i -> {
             System.out.println("CombineList:" + i);
-        });
-
-        new CombineLatest().createObserver(1).subscribe(i -> {
-            System.out.println("result:" + i);
         });
     }
 
-    private Observable<Long> createObserver(int index){
+    private static Observable<Long> createObserver(int index){
         return Observable.interval(500 * index, TimeUnit.MILLISECONDS, Schedulers.trampoline());
     }
 
-    private Observable<String> combineLatestObserver(){
-        return Observable.combineLatest(createObserver(1), createObserver(2), (num1, num2) -> {
+    private static Observable<String> combineLatestObserver(){
+        return Observable.combineLatest(Observable.just(1), Observable.just(2), (num1, num2) -> {
            return "left: " + num1 + " right: " + num2;
         });
     }
 
-    private Observable<String> combineListObserver(){
+    private static Observable<String> combineListObserver() {
         List<Observable<Long>> list = new ArrayList<>();
-        for (int i = 1; i < 3; i++) {
-            list.add(createObserver(i));
+        for (int i = 0; i < 5; i++) {
+            list.add(Observable.just((long)i));
         }
-        return Observable.combineLatest(list, new FuncN<String>() {
-            @Override
-            public String call(Object... args) {
-                String temp = "";
-                for (Object i: args) {
-                    temp = temp + ":" + i;
-                }
-                return temp;
+        return Observable.combineLatest(list, (Object... args) -> {
+            String temp = "";
+            for (Object i : args) {
+                temp = temp + ":" + i;
             }
+            return temp;
         });
     }
 

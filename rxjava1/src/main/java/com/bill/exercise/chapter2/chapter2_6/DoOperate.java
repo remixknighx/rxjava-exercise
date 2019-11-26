@@ -38,35 +38,20 @@ public class DoOperate {
 
     private static Observable<Integer> doOnEachObserver(){
         return Observable.just(1,2,3)
-                .doOnEach(new Action1<Notification<? super Integer>>() {
-                    @Override
-                    public void call(Notification<? super Integer> notification) {
-                        System.out.println("doOnEach send " + notification.getValue() + " type: " + notification.getKind());
-                    }
+                .doOnEach((Notification<? super Integer> notification) -> {
+                    System.out.println("doOnEach send " + notification.getValue() + " type: " + notification.getKind());
                 })
-                .doOnNext(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer integer) {
-                        System.out.println("doOnNext send: " + integer);
-                    }
+                .doOnNext((Integer integer) -> {
+                    System.out.println("doOnNext send: " + integer);
                 })
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        System.out.println("on subscribe");
-                    }
+                .doOnSubscribe(() -> {
+                    System.out.println("on subscribe");
                 })
-                .doOnUnsubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        System.out.println("on unsubscribe");
-                    }
+                .doOnUnsubscribe(() -> {
+                    System.out.println("on unsubscribe");
                 })
-                .doOnCompleted(new Action0() {
-                    @Override
-                    public void call() {
-                        System.out.println("onCompleted");
-                    }
+                .doOnCompleted(() -> {
+                    System.out.println("onCompleted");
                 });
     }
 
@@ -85,31 +70,19 @@ public class DoOperate {
         });
     }
 
-    private static Observable<Integer> doOnErrorObserver(){
+    private static Observable<Integer> doOnErrorObserver() {
         return createObserver()
-                .doOnEach(new Action1<Notification<? super Integer>>() {
-                    @Override
-                    public void call(Notification<? super Integer> notification) {
-                        System.out.println("doOnEach send " + notification.getValue() + " type " + notification.getValue());
-                    }
+                .doOnEach((Notification<? super Integer> notification) -> {
+                    System.out.println("doOnEach send " + notification.getValue() + " type " + notification.getValue());
                 })
-                .doOnError(new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        System.out.println("onError: " + throwable.getMessage());
-                    }
+                .doOnError((Throwable throwable) -> {
+                    System.out.println("onError: " + throwable.getMessage());
                 })
-                .doOnTerminate(new Action0() {
-                    @Override
-                    public void call() {
-                        System.out.println("onTerminate");
-                    }
+                .doOnTerminate(() -> {
+                    System.out.println("onTerminate");
                 })
-                .doAfterTerminate(new Action0() {
-                    @Override
-                    public void call() {
-                        System.out.println("doAfterTerminate");
-                    }
+                .doAfterTerminate(() -> {
+                    System.out.println("doAfterTerminate");
                 });
     }
 

@@ -14,20 +14,14 @@ import rx.functions.Func1;
 public class AllOperate {
 
     public static void main(String[] args) {
-        Observable.just(1,2,3,4,5).all(new Func1<Integer, Boolean>() {
-            @Override
-            public Boolean call(Integer integer) {
-                return integer < 6;
-            }
+        Observable.just(1,2,3,4,5).all((Integer integer) -> {
+            return integer < 6;
         }).subscribe(result -> {
             System.out.println("all result " + result);
         });
 
-        Observable.just(1,2,3,4,5,6).all(new Func1<Integer, Boolean>() {
-            @Override
-            public Boolean call(Integer integer) {
-                return integer < 4;
-            }
+        Observable.just(1,2,3,4,5,6).all((Integer integer) -> {
+            return integer < 4;
         }).subscribe(result -> {
             System.out.println("not all result " + result);
         });

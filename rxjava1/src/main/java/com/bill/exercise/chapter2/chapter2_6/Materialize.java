@@ -1,6 +1,5 @@
 package com.bill.exercise.chapter2.chapter2_6;
 
-import com.sun.org.apache.regexp.internal.RE;
 import rx.Notification;
 import rx.Observable;
 import rx.functions.Action1;
@@ -15,18 +14,12 @@ import rx.functions.Action1;
 public class Materialize {
 
     public static void main(String[] args) {
-        materializeObserver().subscribe(new Action1<Notification<Integer>>() {
-            @Override
-            public void call(Notification<Integer> integerNotification) {
-                System.out.println("materialize: " + integerNotification.getValue() + " type: " + integerNotification.getKind());
-            }
+        materializeObserver().subscribe((Notification<Integer> integerNotification) -> {
+            System.out.println("materialize: " + integerNotification.getValue() + " type: " + integerNotification.getKind());
         });
 
-        deMaterializeObserver().subscribe(new Action1<Integer>() {
-            @Override
-            public void call(Integer integer) {
-                System.out.println("deMaterialize: " + integer);
-            }
+        deMaterializeObserver().subscribe((Integer integer) -> {
+            System.out.println("deMaterialize: " + integer);
         });
     }
 

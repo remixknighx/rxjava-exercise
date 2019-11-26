@@ -32,9 +32,7 @@ public class OnErrorResumeNext {
     }
 
     private static Observable<String> createObserver(){
-        return Observable.create(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
+        return Observable.create((Subscriber<? super String> subscriber) -> {
                 for (int i = 0; i < 6; i++) {
                     if(i == 3){
                         subscriber.onError(new Exception("Throw Error"));
@@ -42,7 +40,6 @@ public class OnErrorResumeNext {
                         subscriber.onNext(String.valueOf(i));
                     }
                 }
-            }
         });
     }
 
