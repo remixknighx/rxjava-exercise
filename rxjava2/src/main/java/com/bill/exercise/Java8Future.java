@@ -8,7 +8,10 @@ import java.util.concurrent.*;
 public class Java8Future {
 
     public static void main( String[] args ) throws Exception {
-        completableFuture();
+        CompletableFuture<String> result = new CompletableFuture<>();
+        result.complete("dfdsfsdf");
+
+        System.out.println(result.get());
     }
 
     private static void futureExercise() throws Exception {
