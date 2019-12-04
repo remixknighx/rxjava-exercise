@@ -1,6 +1,7 @@
 package com.bill.exercise.chapter2.chapter2_4;
 
 import rx.Observable;
+import rx.Subscriber;
 
 /**
  * startWith操作符会在源Observable发送的数据前面插入一些数据
@@ -11,6 +12,22 @@ import rx.Observable;
 public class StartWith {
 
     public static void main(String[] args) {
+        new Subscriber() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Object o) {
+
+            }
+        };
         startWithObserver().subscribe(i -> {
             System.out.println("StartWith:" + i);
         });

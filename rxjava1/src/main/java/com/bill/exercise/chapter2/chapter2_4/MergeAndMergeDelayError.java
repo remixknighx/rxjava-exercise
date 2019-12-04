@@ -15,9 +15,9 @@ import rx.Subscriber;
 public class MergeAndMergeDelayError {
 
     public static void main(String[] args) {
-        mergeObserver().subscribe(i -> {
-            System.out.println("Merge:" + i);
-        });
+//        mergeObserver().subscribe(i -> {
+//            System.out.println("Merge:" + i);
+//        });
 
         mergeDelayErrorObserver().subscribe(new Subscriber<Integer>() {
             @Override
