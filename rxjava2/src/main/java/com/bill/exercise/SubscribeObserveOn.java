@@ -2,10 +2,7 @@ package com.bill.exercise;
 
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import sun.rmi.runtime.Log;
 
 /**
  * ObserveOn
@@ -23,35 +20,23 @@ public class SubscribeObserveOn {
     public static void main(String[] args) {
         Observable.just(1)
                 .observeOn(Schedulers.newThread())
-                .map(new Function<Integer, Integer>() {
-                    @Override
-                    public Integer apply(@NonNull Integer integer) throws Exception {
-                        System.out.println("map-1:"+Thread.currentThread().getName());
-                        return integer;
-                    }
+                .map((@NonNull Integer integer) -> {
+                    System.out.println("map-1:" + Thread.currentThread().getName());
+                    return integer;
                 })
                 .observeOn(Schedulers.newThread())
-                .map(new Function<Integer, Integer>() {
-                    @Override
-                    public Integer apply(@NonNull Integer integer) throws Exception {
-                        System.out.println("map-2:"+Thread.currentThread().getName());
-                        return integer;
-                    }
+                .map((@NonNull Integer integer) -> {
+                    System.out.println("map-2:" + Thread.currentThread().getName());
+                    return integer;
                 })
                 .observeOn(Schedulers.io())
-                .map(new Function<Integer, Integer>() {
-                    @Override
-                    public Integer apply(@NonNull Integer integer) throws Exception {
-                        System.out.println("map-3:"+Thread.currentThread().getName());
-                        return integer;
-                    }
+                .map((@NonNull Integer integer) -> {
+                    System.out.println("map-3:" + Thread.currentThread().getName());
+                    return integer;
                 })
                 .subscribeOn(Schedulers.single())
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(@NonNull Integer integer) throws Exception {
-                        System.out.println("subscribe:"+Thread.currentThread().getName());
-                    }
+                .subscribe((@NonNull Integer integer) -> {
+                    System.out.println("subscribe:" + Thread.currentThread().getName());
                 });
 
         try {

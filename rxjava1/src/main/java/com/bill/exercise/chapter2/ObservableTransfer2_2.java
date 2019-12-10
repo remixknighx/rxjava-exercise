@@ -13,7 +13,7 @@ import java.util.List;
 public class ObservableTransfer2_2 {
 
     public static void main(String[] args) {
-        flatMapExercise();
+//        flatMapExercise();
         mapExercise();
     }
 
@@ -67,8 +67,8 @@ public class ObservableTransfer2_2 {
     private static void mapExercise() {
         Observable.just(1, 2, 3).map((Integer integer) -> {
             System.out.println("integer: " + integer);
-            return integer * 10;
-        }).subscribe((Integer integer) -> {
+            return String.valueOf(integer * 10);
+        }).subscribe((String integer) -> {
             System.out.println("map:" + integer);
         });
     }
