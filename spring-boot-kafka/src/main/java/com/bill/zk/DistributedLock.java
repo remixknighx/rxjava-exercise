@@ -27,7 +27,8 @@ public class DistributedLock {
     private ThreadLocal<InterProcessLock> lockGroups = new ThreadLocal<>();
 
     public boolean acquire() {
-        InterProcessLock lock = new InterProcessMutex(client, LOCK_PATH);
+        CuratorFramework curatorFramework = this.client;
+        InterProcessLock lock = new InterProcessMutex(curatorFramework, LOCK_PATH);
 
         try {
             lockGroups.set(lock);

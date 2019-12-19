@@ -19,7 +19,6 @@ public class ZkConfig {
     private String zkUrl;
     @Value("${zookeeper.default_path:test}")
     private String zkDefaultPath;
-    private final String LOCK_PATH = "/lock";
 
     @Bean
     public CuratorFramework getCuratorFramework(){
