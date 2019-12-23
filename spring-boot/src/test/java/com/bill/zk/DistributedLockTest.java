@@ -1,6 +1,5 @@
 package com.bill.zk;
 
-import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
@@ -22,13 +21,11 @@ import java.util.concurrent.TimeUnit;
 public class DistributedLockTest {
 
     @Autowired
-    CuratorFramework client;
-    @Autowired
     private DistributedLock distributedLock;
 
     @Test
     public void testAcquire() throws Exception {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 3; i++) {
             new Thread("Thread " + i){
                 @Override
                 public void run() {
@@ -46,6 +43,8 @@ public class DistributedLockTest {
                 }
             }.start();
         }
+
+        Thread.sleep(10000);
     }
 
     public static void main(String[] args) throws Exception {

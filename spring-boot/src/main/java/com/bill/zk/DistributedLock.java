@@ -6,6 +6,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.apache.zookeeper.CreateMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +23,12 @@ public class DistributedLock {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DistributedLock.class);
     @Autowired
-    private ZkConfig zkConfig;
+    private CuratorFramework client;
     private final String LOCK_PATH = "/lock";
+    private ThreadLocal<InterProcessMutex> threadLocal = new ThreadLocal<>();
 
     public boolean acquire() {
         try {
-            CuratorFramework client = CuratorFrameworkFactory.builder()
-                    .connectString(zkConfig.getZkUrl())
-                    .sessionTimeoutMs(400000)
-                    .retryPolicy(new ExponentialBackoffRetry(30000,3))
-                    .namespace(zkConfig.getZkDefaultPath())
-                    .build();
-            client.start();
             InterProcessMutex lock = new InterProcessMutex(client, LOCK_PATH);
             boolean lockResult = lock.acquire(10, TimeUnit.SECONDS);
             if (lockResult) {
@@ -41,6 +36,7 @@ public class DistributedLock {
             } else {
                 LOGGER.info("[{}] acquire lock failure! ", Thread.currentThread().getName());
             }
+            threadLocal.set(lock);
             return lockResult;
         } catch (Exception e) {
             throw new ZkException(e);
@@ -49,14 +45,7 @@ public class DistributedLock {
 
     public void release() {
         try {
-            CuratorFramework client = CuratorFrameworkFactory.builder()
-                    .connectString(zkConfig.getZkUrl())
-                    .sessionTimeoutMs(400000)
-                    .retryPolicy(new ExponentialBackoffRetry(30000,3))
-                    .namespace(zkConfig.getZkDefaultPath())
-                    .build();
-            client.start();
-            InterProcessMutex lock = new InterProcessMutex(client, LOCK_PATH);
+            InterProcessMutex lock = threadLocal.get();
             if (lock != null) {
                 lock.release();
                 LOGGER.info("[{}] release lock success", Thread.currentThread().getName());
