@@ -14,5 +14,4 @@ gen
 /grpc-exercise/target/
 /spring-boot-pulsar/target/
 /vertx-exercise/target/
-/spring-boot-kafka/target/classes/
-/spring-boot-producer/target/
+/spring-boot/target/

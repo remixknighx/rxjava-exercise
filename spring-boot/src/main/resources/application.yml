@@ -1,0 +1,19 @@
+# 端口号
+server:
+  servlet:
+    context-path: /boot
+  port: 8082
+
+# 模块名称
+module.name: spring-boot
+
+# zk配置
+zookeeper:
+  url: 127.0.0.1:2181
+  default_path: test
+
+# 日志级别
+#logging.level: info
+
+
+

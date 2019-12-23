@@ -16,6 +16,7 @@
         <module>spring-boot-kafka</module>
         <module>spring-boot-pulsar</module>
         <module>grpc-exercise</module>
+        <module>spring-boot</module>
   </modules>
 
   <name>rxjava-exercise</name>
