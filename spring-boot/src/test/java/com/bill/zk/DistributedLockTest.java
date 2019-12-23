@@ -33,13 +33,15 @@ public class DistributedLockTest {
                 @Override
                 public void run() {
                     boolean lockResult = distributedLock.acquire();
-                    System.out.println("子线程" + Thread.currentThread().getName() + "获取锁结果" + lockResult);
-                    try {
-                        Thread.sleep(2000L);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    if (lockResult) {
+                        System.out.println("子线程" + Thread.currentThread().getName() + "获取锁结果" + lockResult);
+                        try {
+                            Thread.sleep(2000L);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("子线程" + Thread.currentThread().getName() + "执行任务成功");
                     }
-                    System.out.println("子线程" + Thread.currentThread().getName() + "执行任务成功");
                     distributedLock.release();
                 }
             }.start();
@@ -61,14 +63,14 @@ public class DistributedLockTest {
                 public void run() {
                     InterProcessMutex lock = new InterProcessMutex(client, "/lock");
                     try {
-                        lock.acquire(3, TimeUnit.SECONDS);
-                        try {
-                            Thread.sleep(5000L);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                        if (lock.acquire(10, TimeUnit.SECONDS)) {
+                            try {
+                                Thread.sleep(3000L);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println("子线程" + Thread.currentThread().getName() + "执行任务成功");
                         }
-                        System.out.println("子线程" + Thread.currentThread().getName() + "执行任务成功");
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     } finally {

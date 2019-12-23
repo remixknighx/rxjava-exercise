@@ -27,7 +27,14 @@ public class DistributedLock {
 
     public boolean acquire() {
         try {
-            InterProcessMutex lock = new InterProcessMutex(createZkClient(), LOCK_PATH);
+            CuratorFramework client = CuratorFrameworkFactory.builder()
+                    .connectString(zkConfig.getZkUrl())
+                    .sessionTimeoutMs(400000)
+                    .retryPolicy(new ExponentialBackoffRetry(30000,3))
+                    .namespace(zkConfig.getZkDefaultPath())
+                    .build();
+            client.start();
+            InterProcessMutex lock = new InterProcessMutex(client, LOCK_PATH);
             boolean lockResult = lock.acquire(10, TimeUnit.SECONDS);
             if (lockResult) {
                 LOGGER.info("[{}] acquire lock success! ", Thread.currentThread().getName());
@@ -42,7 +49,14 @@ public class DistributedLock {
 
     public void release() {
         try {
-            InterProcessMutex lock = new InterProcessMutex(createZkClient(), LOCK_PATH);
+            CuratorFramework client = CuratorFrameworkFactory.builder()
+                    .connectString(zkConfig.getZkUrl())
+                    .sessionTimeoutMs(400000)
+                    .retryPolicy(new ExponentialBackoffRetry(30000,3))
+                    .namespace(zkConfig.getZkDefaultPath())
+                    .build();
+            client.start();
+            InterProcessMutex lock = new InterProcessMutex(client, LOCK_PATH);
             if (lock != null) {
                 lock.release();
                 LOGGER.info("[{}] release lock success", Thread.currentThread().getName());
@@ -54,15 +68,5 @@ public class DistributedLock {
         }
     }
 
-    private CuratorFramework createZkClient(){
-        CuratorFramework client = CuratorFrameworkFactory.builder()
-                .connectString(zkConfig.getZkUrl())
-                .sessionTimeoutMs(400000)
-                .retryPolicy(new ExponentialBackoffRetry(30000,3))
-                .namespace(zkConfig.getZkDefaultPath())
-                .build();
-        client.start();
-        return client;
-    }
 
 }
