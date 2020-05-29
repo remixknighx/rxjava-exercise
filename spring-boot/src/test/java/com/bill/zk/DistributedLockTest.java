@@ -48,7 +48,7 @@ public class DistributedLockTest {
     }
 
     public static void main(String[] args) throws Exception {
-        CuratorFramework client = CuratorFrameworkFactory.builder()
+        final CuratorFramework client = CuratorFrameworkFactory.builder()
                 .connectString("127.0.0.1:2181")
                 .sessionTimeoutMs(400000)
                 .retryPolicy(new ExponentialBackoffRetry(30000,3))

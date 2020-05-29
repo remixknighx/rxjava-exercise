@@ -4,6 +4,9 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -13,7 +16,12 @@ import java.util.concurrent.TimeUnit;
 public class ObservableCreate2_1 {
 
     public static void main(String[] args) {
-        timerExercise();
+//        List<String> testList = new ArrayList<>();
+//        Observable.from(testList);
+        System.out.println(File.pathSeparator);
+        System.out.println(File.pathSeparatorChar);
+        System.out.println(File.separator);
+        System.out.println(File.separatorChar);
     }
 
     /**
@@ -49,8 +57,11 @@ public class ObservableCreate2_1 {
      * from操作符接收一个对象作为参数来创建Observable，参数对象可以是Iterable, Callable, Future和数组
      */
     private static void fromExercise(){
-        Observable.from(new Integer[]{0, 1, 2, 3, 4, 5}).subscribe((integer) -> {
-            System.out.println("single value: " + integer);
+        Observable.from(new Integer[]{0, 1, 2, 3, 4, 5})
+                .sample(1, TimeUnit.SECONDS, Schedulers.trampoline())
+                .observeOn(Schedulers.io())
+                .subscribe((integer) -> {
+            System.out.println(Thread.currentThread().getName() + " single value: " + integer);
         });
     }
 
