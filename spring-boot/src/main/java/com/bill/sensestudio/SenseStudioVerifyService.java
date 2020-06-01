@@ -1,5 +1,6 @@
 package com.bill.sensestudio;
 
+import com.bill.sensestudio.dict.SenseTimeDict;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
 import org.slf4j.Logger;
@@ -48,7 +49,8 @@ public class SenseStudioVerifyService {
             if (response.code() == HttpStatus.OK.value() && response.body() != null) {
                 ObjectMapper objectMapper = new ObjectMapper();
                 VerifyResponse verifyResponse = objectMapper.readValue(response.body().string(), VerifyResponse.class);
-                if (1000 == verifyResponse.getCode() && verifyResponse.getVerification_score() >= SUCCESS_SCORE) {
+                if (SenseTimeDict.VALID_RESPONSE.getCode() == verifyResponse.getCode() && verifyResponse.getVerification_score() >= SUCCESS_SCORE) {
+                    LOGGER.info("user [{}] 第三方人脸验证通过 score [{}]", name, verifyResponse.getVerification_score());
                     return true;
                 } else {
                     LOGGER.warn("人脸验证不通过! name => [{}], verifyResponse => [{}]", name, verifyResponse.toString());
@@ -59,7 +61,7 @@ public class SenseStudioVerifyService {
 
             return false;
         } catch (IOException e) {
-            LOGGER.error("连接商汤网络接口异常! name => [{}]", name, e);
+            LOGGER.error("连接商汤接口网络异常! name => [{}]", name, e);
             return false;
         }
     }

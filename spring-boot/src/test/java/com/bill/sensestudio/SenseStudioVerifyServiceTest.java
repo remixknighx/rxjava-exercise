@@ -17,9 +17,9 @@ public class SenseStudioVerifyServiceTest {
 
     @Test
     public void verifyIdNumber() {
-        String name = "";
-        String idNumber = "";
-        String filePath = "C:\\Users\\wbwangjianfeng\\Desktop\\商汤\\image1.jpg";
+        String name = "王剑峰";
+        String idNumber = "310229199204010612";
+        String filePath = "C:\\Users\\wbwangjianfeng\\Desktop\\商汤\\wuyanzu.jpg";
         System.out.println(senseStudioVerifyService.verifyIdNumber(name, idNumber, filePath));
     }
 }

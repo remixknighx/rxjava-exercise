@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * @author wangjianfeng
@@ -24,11 +23,7 @@ public class AuthGenerator {
         String genOriString = genOriString(timestamp, nonce);
         String encryptedString = Hashing.hmacSha256(API_SECRET.getBytes()).hashString(genOriString, Charsets.UTF_8).toString();
 
-        String HeaderParam = "key=" + API_KEY
-                +",timestamp=" + timestamp
-                +",nonce=" + nonce
-                +",signature=" + encryptedString;
-        return HeaderParam;
+        return String.format("key=%s,timestamp=%s,nonce=%s,signature=%s", API_KEY, timestamp, nonce, encryptedString);
     }
 
     private String genOriString(String timestamp, String nonce){
@@ -38,27 +33,21 @@ public class AuthGenerator {
         beforeSort.add(timestamp);
         beforeSort.add(nonce);
 
-        Collections.sort(beforeSort, new SpellComparator());
-        StringBuffer afterSort = new StringBuffer();
-        for (int i = 0; i < beforeSort.size(); i++) {
-            afterSort.append(beforeSort.get(i));
-        }
+        Collections.sort(beforeSort, (o1, o2) -> {
+            try{
+                String s1 = new String(o1.toString().getBytes(Charsets.UTF_8.name()), Charsets.ISO_8859_1.name());
+                String s2 = new String(o2.toString().getBytes(Charsets.UTF_8.name()), Charsets.ISO_8859_1.name());
+                return s1.compareTo(s2);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return 0;
+        });
+        StringBuilder afterSort = new StringBuilder();
+        beforeSort.forEach(afterSort::append);
 
         return afterSort.toString();
     }
 
 }
 
-class SpellComparator implements Comparator<Object> {
-    @Override
-    public int compare(Object o1, Object o2) {
-        try{
-            String s1 = new String(o1.toString().getBytes(Charsets.UTF_8.name()), Charsets.ISO_8859_1.name());
-            String s2 = new String(o2.toString().getBytes(Charsets.UTF_8.name()), Charsets.ISO_8859_1.name());
-            return s1.compareTo(s2);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return 0;
-    }
-}
